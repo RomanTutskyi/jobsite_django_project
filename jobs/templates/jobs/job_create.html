@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Додати вакансію - JobFinder{% endblock %}
+
+{% block content %}
+<section class="form-section">
+    <h1>Нова вакансія</h1>
+    <form method="post" class="form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-primary">Зберегти</button>
+    </form>
+</section>
+{% endblock %}

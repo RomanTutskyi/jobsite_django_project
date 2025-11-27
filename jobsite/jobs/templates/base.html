@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Пошук вакансій{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="container header-inner">
+            <a href="{% url 'job_list' %}" class="logo">JobFinder</a>
+            <nav class="nav">
+                <a href="{% url 'job_list' %}">Головна</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'job_create' %}">Додати вакансію</a>
+                    <span class="nav-username">Ви увійшли як {{ user.username }}</span>
+                    <a href="{% url 'logout' %}">Вийти</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Увійти</a>
+                    <a href="{% url 'register' %}" class="btn-primary">Реєстрація</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="message {{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            © {{ now|date:"Y" }} JobFinder
+        </div>
+    </footer>
+</body>
+</html>

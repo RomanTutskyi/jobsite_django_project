@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Вакансії - JobFinder{% endblock %}
+
+{% block content %}
+<section class="search-section">
+    <form method="get" class="search-form">
+        <input type="text" name="q" placeholder="Пошук за назвою, компанією, містом..." value="{{ query }}" />
+        <button type="submit">Знайти</button>
+    </form>
+</section>
+
+<section class="jobs-list">
+    {% if jobs %}
+        {% for job in jobs %}
+            <article class="job-card">
+                <h2><a href="{% url 'job_detail' job.pk %}">{{ job.title }}</a></h2>
+                <p class="job-meta">
+                    <span>{{ job.company }}</span> •
+                    <span>{{ job.location }}</span> •
+                    <span>{{ job.created_at|date:"d.m.Y H:i" }}</span>
+                </p>
+                <p class="job-description">
+                    {{ job.description|truncatewords:30 }}
+                </p>
+                <a href="{% url 'job_detail' job.pk %}" class="btn-secondary">Детальніше</a>
+            </article>
+        {% endfor %}
+    {% else %}
+        <p>Поки що немає вакансій. Будьте першим, хто додасть!</p>
+    {% endif %}
+</section>
+{% endblock %}
